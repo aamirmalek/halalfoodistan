@@ -10,10 +10,10 @@ if (!is_array($data)) {
     exit;
 }
 
-$to = 'sales@halalfoodistan.com';
+$to = 'sale@halalfoodistan.com';
 $subject = 'New Halal Foodistan Lead - ' . ($data['businessName'] ?? 'Unknown Business');
 $body = [];
-$body[] = 'New lead submitted from the Halal Foodistan questionnaire.';
+$body[] = 'New lead submitted from the Halal Foodistan inquiry form.';
 $body[] = '';
 $body[] = 'Business: ' . ($data['businessName'] ?? '');
 $body[] = 'Owner: ' . ($data['ownerName'] ?? '');
@@ -23,9 +23,14 @@ $body[] = 'Instagram: ' . ($data['instagram'] ?? '');
 $body[] = 'Business Type: ' . ($data['businessType'] ?? '');
 $body[] = 'Goal: ' . ($data['goal'] ?? '');
 $body[] = 'Budget: ' . ($data['budget'] ?? '');
+$body[] = 'Services: ' . (isset($data['services']) && is_array($data['services']) ? implode(', ', $data['services']) : '');
+$body[] = 'Primary Service: ' . ($data['primaryService'] ?? '');
+$body[] = 'Project Focus: ' . ($data['projectFocus'] ?? '');
+$body[] = 'Platforms: ' . (isset($data['platforms']) && is_array($data['platforms']) ? implode(', ', $data['platforms']) : '');
 $body[] = 'Lead Score: ' . ($data['leadScore'] ?? '');
 $body[] = 'Recommendation: ' . ($data['recommendation'] ?? '');
 $body[] = 'Notes: ' . ($data['notes'] ?? '');
+$body[] = 'Additional Notes: ' . ($data['additionalNotes'] ?? '');
 $body[] = 'Submitted: ' . ($data['submittedAt'] ?? date('c'));
 
 $headers = [];

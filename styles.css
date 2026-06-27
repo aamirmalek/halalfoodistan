@@ -2,6 +2,8 @@
   color-scheme: dark;
   --bg: #07110c;
   --panel: #0f1f17;
+  --panel-strong: rgba(11, 23, 16, 0.96);
+  --panel-soft: rgba(21, 40, 32, 0.72);
   --panel-alt: #152820;
   --text: #f5f1e8;
   --muted: #b7c3b8;
@@ -19,31 +21,71 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background: radial-gradient(circle at top, rgba(208, 166, 71, 0.18), transparent 30%), var(--bg);
+  background:
+    radial-gradient(circle at top, rgba(208, 166, 71, 0.18), transparent 30%),
+    radial-gradient(circle at 85% 12%, rgba(240, 201, 108, 0.12), transparent 26%),
+    linear-gradient(180deg, #07110c 0%, #09160f 48%, #06100b 100%);
   color: var(--text);
   min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 85%);
+  pointer-events: none;
+  opacity: 0.28;
 }
 
 .page-shell {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 32px 20px 48px;
+  padding: 30px 20px 56px;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-card,
 .form-card {
-  background: rgba(15, 31, 23, 0.92);
+  background: var(--panel-strong);
   border: 1px solid var(--border);
   border-radius: 24px;
   box-shadow: 0 16px 60px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(18px);
 }
 
 .hero-card {
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.9fr);
+  gap: 28px;
+  padding: 34px;
   margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::after {
+  content: '';
+  position: absolute;
+  inset: auto -12% -40% auto;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(208, 166, 71, 0.2), transparent 68%);
+  pointer-events: none;
+}
+
+.hero-copy,
+.hero-panel {
+  position: relative;
+  z-index: 1;
 }
 
 .eyebrow {
@@ -70,24 +112,209 @@ body {
 
 .hero-badge {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 10px;
-  min-width: 220px;
-  align-self: center;
+  margin-top: 24px;
+  margin-bottom: 18px;
 }
 
 .hero-badge span {
-  background: var(--panel-alt);
-  border: 1px solid rgba(208, 166, 71, 0.25);
-  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(208, 166, 71, 0.22);
+  padding: 10px 14px;
   border-radius: 999px;
-  text-align: center;
   color: var(--accent-strong);
   font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.btn,
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  text-decoration: none;
 }
 
 .form-card {
   padding: 28px;
+}
+
+.section-header.compact {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.services-section {
+  margin-bottom: 24px;
+  padding: 4px 0 10px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.service-card {
+  background: var(--panel-soft);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(208, 166, 71, 0.35);
+  background: rgba(21, 40, 32, 0.88);
+}
+
+.service-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(208, 166, 71, 0.12);
+  border: 1px solid rgba(208, 166, 71, 0.22);
+  font-size: 1.25rem;
+  margin-bottom: 14px;
+}
+
+.service-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.service-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: 0.96rem;
+}
+
+.hero-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.brand-showcase {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 22px;
+  padding: 22px;
+}
+
+.brand-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, rgba(240, 201, 108, 0.16), rgba(0, 0, 0, 0));
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.brand-logo {
+  width: min(100%, 260px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.45));
+}
+
+.brand-showcase-copy .brand-label {
+  margin: 0 0 8px;
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+}
+
+.brand-showcase-copy h2 {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.brand-showcase-copy p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.mini-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mini-proof {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.mini-proof strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+.mini-proof span {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.step-note {
+  margin: -8px 0 18px;
+  color: var(--muted);
+  font-size: 0.96rem;
+}
+
+.service-detail-grid {
+  margin-top: 14px;
+}
+
+.service-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.service-checkboxes label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.service-checkboxes input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
 }
 
 .progress-track {
@@ -167,6 +394,7 @@ textarea {
 .checkbox-group label,
 .consent {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 10px;
   color: var(--text);
@@ -202,6 +430,11 @@ textarea {
 .btn-secondary {
   background: rgba(255, 255, 255, 0.08);
   color: var(--text);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  transform: translateY(-1px);
 }
 
 .resume-notice {
@@ -255,8 +488,15 @@ textarea {
     flex-direction: column;
   }
 
+  .services-grid,
+  .mini-proof-grid,
   .grid,
-  .checkbox-group {
+  .checkbox-group,
+  .service-checkboxes {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-card {
     grid-template-columns: 1fr;
   }
 }

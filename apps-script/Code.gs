@@ -15,9 +15,9 @@ function doPost(e) {
       payload.goal || '',
       payload.budget || '',
       payload.contactMethod || '',
-      payload.deliveryPlatforms || '',
-      payload.eventCapacity || '',
-      payload.venueStyle || '',
+      payload.primaryService || '',
+      payload.projectFocus || '',
+      Array.isArray(payload.services) ? payload.services.join(', ') : '',
       Array.isArray(payload.platforms) ? payload.platforms.join(', ') : '',
       payload.contactTime || '',
       payload.notes || '',
@@ -64,9 +64,9 @@ function getSheet() {
       'Goal',
       'Budget',
       'Contact Method',
-      'Delivery Platforms',
-      'Event Capacity',
-      'Venue Style',
+      'Primary Service',
+      'Project Focus',
+      'Services',
       'Platforms',
       'Best Time',
       'Notes',
@@ -80,10 +80,10 @@ function getSheet() {
 }
 
 function sendEmail(payload) {
-  const recipient = PropertiesService.getScriptProperties().getProperty('EMAIL_TO') || 'sales@halalfoodistan.com';
+  const recipient = PropertiesService.getScriptProperties().getProperty('EMAIL_TO') || 'sale@halalfoodistan.com';
   const subject = `New Halal Foodistan Lead - ${payload.businessName || 'Unknown Business'}`;
   const body = [
-    'New lead submitted from the Halal Foodistan questionnaire.',
+    'New lead submitted from the Halal Foodistan inquiry form.',
     '',
     `Business: ${payload.businessName || ''}`,
     `Owner: ${payload.ownerName || ''}`,
@@ -93,9 +93,14 @@ function sendEmail(payload) {
     `Business Type: ${payload.businessType || ''}`,
     `Goal: ${payload.goal || ''}`,
     `Budget: ${payload.budget || ''}`,
+    `Services: ${Array.isArray(payload.services) ? payload.services.join(', ') : ''}`,
+    `Primary Service: ${payload.primaryService || ''}`,
+    `Project Focus: ${payload.projectFocus || ''}`,
+    `Platforms: ${Array.isArray(payload.platforms) ? payload.platforms.join(', ') : ''}`,
     `Lead Score: ${payload.leadScore || ''}`,
     `Recommendation: ${payload.recommendation || ''}`,
     `Notes: ${payload.notes || ''}`,
+    `Additional Notes: ${payload.additionalNotes || ''}`,
     `Submitted: ${new Date().toISOString()}`
   ].join('\n');
 

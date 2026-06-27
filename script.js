@@ -28,7 +28,8 @@ function validateCurrentStep() {
     const wrapper = field.closest('label') || field.parentElement;
     wrapper.classList.remove('error');
 
-    if (!field.value.trim()) {
+    const isEmpty = field.type === 'checkbox' ? !field.checked : !field.value.trim();
+    if (isEmpty) {
       wrapper.classList.add('error');
       isValid = false;
     }
@@ -43,6 +44,7 @@ function validateCurrentStep() {
 
 function collectFormData() {
   const data = Object.fromEntries(new FormData(form).entries());
+  data.services = Array.from(form.querySelectorAll('input[name="services"]:checked')).map((box) => box.value);
   data.platforms = Array.from(form.querySelectorAll('input[name="platforms"]:checked')).map((box) => box.value);
   data.submittedAt = new Date().toISOString();
   data.leadScore = calculateLeadScore(data);
@@ -51,29 +53,41 @@ function collectFormData() {
 }
 
 function calculateLeadScore(data) {
-  let score = 30;
+  const services = Array.isArray(data.services) ? data.services : [];
+  const platforms = Array.isArray(data.platforms) ? data.platforms : [];
+  let score = 28;
 
   if (data.businessName) score += 12;
   if (data.phone && data.email) score += 15;
   if (data.businessType) score += 10;
   if (data.goal) score += 10;
   if (data.budget && data.budget !== 'Under $500') score += 10;
-  if (data.platforms.length) score += 8;
+  if (services.length) score += Math.min(services.length * 6, 18);
+  if (platforms.length) score += 8;
   if (data.notes) score += 5;
+  if (data.projectFocus) score += 4;
+  if (data.contactTime) score += 3;
 
   return Math.min(score, 100);
 }
 
 function getRecommendation(data) {
-  if (data.budget === '$3000+' || data.budget === '$1500-$3000') {
-    return 'Platinum package recommendation: full brand, growth, and automation support.';
+  const services = Array.isArray(data.services) ? data.services : [];
+  const serviceCount = services.length;
+
+  if (data.budget === '$3000+' || data.budget === '$1500-$3000' || serviceCount >= 4) {
+    return 'Full-service recommendation: content, campaigns, and ongoing social support for steady growth.';
   }
 
   if (data.budget === 'Under $500') {
-    return 'Starter package recommendation: focused launch support and quick wins.';
+    return 'Starter recommendation: a focused content and social plan with quick wins first.';
   }
 
-  return 'Growth package recommendation: strong foundation for visibility and lead generation.';
+  if (serviceCount >= 2) {
+    return 'Growth recommendation: a solid mix of content, social, and local promotion.';
+  }
+
+  return 'Starter recommendation: we can begin with one clear service and build from there.';
 }
 
 function saveProgress() {
@@ -88,7 +102,7 @@ function restoreProgress() {
   try {
     const data = JSON.parse(stored);
     Object.entries(data).forEach(([key, value]) => {
-      if (key === 'platforms') return;
+      if (key === 'platforms' || key === 'services') return;
       const field = form.querySelector(`[name="${key}"]`);
       if (field) {
         if (field.type === 'checkbox') {
@@ -106,6 +120,13 @@ function restoreProgress() {
       });
     }
 
+    if (Array.isArray(data.services)) {
+      data.services.forEach((service) => {
+        const checkbox = form.querySelector(`input[name="services"][value="${service}"]`);
+        if (checkbox) checkbox.checked = true;
+      });
+    }
+
     resumeNotice.innerHTML = 'A saved draft was found. <button type="button" id="resumeBtn">Resume it</button>';
     resumeNotice.classList.remove('hidden');
     document.getElementById('resumeBtn').addEventListener('click', () => {
@@ -118,20 +139,17 @@ function restoreProgress() {
 }
 
 function toggleConditionalFields() {
-  const businessType = form.querySelector('[name="businessType"]').value;
-  const restaurantFields = document.getElementById('restaurantFields');
-  const eventFields = document.getElementById('eventFields');
-
-  restaurantFields.classList.toggle('hidden', businessType !== 'Restaurant');
-  eventFields.classList.toggle('hidden', businessType !== 'Event');
+  return;
 }
 
 function showThankYou(data) {
+  const services = Array.isArray(data.services) ? data.services : [];
   form.classList.add('hidden');
   thankYou.classList.remove('hidden');
   thankYou.innerHTML = `
     <h3>Thank you, ${data.ownerName || data.businessName || 'friend'}.</h3>
     <p>Your inquiry has been captured and we will review it shortly.</p>
+    <p><strong>Services:</strong> ${services.length ? services.join(', ') : 'Not specified'}</p>
     <p><strong>Lead score:</strong> ${data.leadScore}/100</p>
     <p><strong>Recommendation:</strong> ${data.recommendation}</p>
     <p>We will contact you at ${data.phone || data.email || 'your preferred contact point'} soon.</p>
