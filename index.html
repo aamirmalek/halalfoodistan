@@ -125,16 +125,16 @@
                 <input type="text" name="businessName" required />
               </label>
               <label>
-                Owner name
-                <input type="text" name="ownerName" required />
+                Your name
+                <input type="text" name="contactName" autocomplete="name" required />
               </label>
               <label>
                 Phone
-                <input type="tel" name="phone" required />
+                <input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="(214) 555-0123" required />
               </label>
               <label>
                 Email
-                <input type="email" name="email" required />
+                <input type="email" name="email" autocomplete="email" placeholder="name@business.com" required />
               </label>
               <label>
                 Instagram
@@ -151,87 +151,88 @@
           </div>
 
           <div class="step" data-step="2">
-            <h2>What would you like help with?</h2>
-            <p class="step-note">Choose the services that matter most. You can pick more than one.</p>
-            <div class="grid">
-              <label>
-                Business type
-                <select name="businessType" required>
-                  <option value="">Choose one</option>
-                  <option value="Restaurant">Restaurant</option>
-                  <option value="Cafe">Cafe</option>
-                  <option value="Retail">Retail store</option>
-                  <option value="Service brand">Service brand</option>
-                  <option value="Event brand">Event brand</option>
-                  <option value="Other">Other</option>
-                </select>
-              </label>
-              <label>
-                Main goal
-                <select name="goal" required>
-                  <option value="">Choose one</option>
-                  <option value="Get more customers">Get more customers</option>
-                  <option value="Improve online presence">Improve online presence</option>
-                  <option value="Build brand awareness">Build brand awareness</option>
-                  <option value="Promote an event">Promote an event</option>
-                  <option value="Launch better content">Launch better content</option>
-                  <option value="Run ads and targeting">Run ads and targeting</option>
-                </select>
-              </label>
-              <label>
-                Budget range
-                <select name="budget" required>
-                  <option value="">Choose one</option>
-                  <option value="Under $500">Under $500</option>
-                  <option value="$500-$1500">$500-$1500</option>
-                  <option value="$1500-$3000">$1500-$3000</option>
-                  <option value="$3000+">$3000+</option>
-                </select>
-              </label>
-              <label>
-                Preferred contact method
-                <select name="contactMethod" required>
-                  <option value="">Choose one</option>
-                  <option value="Phone">Phone</option>
-                  <option value="Email">Email</option>
-                  <option value="WhatsApp">WhatsApp</option>
-                </select>
-              </label>
+            <h2>What services are you interested in?</h2>
+            <p class="step-note">Pick one or more options. This keeps it simple and helps us understand what you need.</p>
+            <div class="choice-block">
+              <div class="choice-heading">Services we offer</div>
+              <div class="choice-grid choice-grid-services">
+                <label class="choice-card choice-card-check">
+                  <input type="checkbox" name="services" value="Content creation" />
+                  <div class="choice-copy">
+                    <strong>Content Creation</strong>
+                    <span>Reels, photography, event coverage</span>
+                  </div>
+                </label>
+                <label class="choice-card choice-card-check">
+                  <input type="checkbox" name="services" value="Social media management" />
+                  <div class="choice-copy">
+                    <strong>Social Media Management</strong>
+                    <span>Posting, planning, and profile polish</span>
+                  </div>
+                </label>
+                <label class="choice-card choice-card-check">
+                  <input type="checkbox" name="services" value="Podcasts & owner interviews" />
+                  <div class="choice-copy">
+                    <strong>Podcasts & Interviews</strong>
+                    <span>Owner stories and brand conversations</span>
+                  </div>
+                </label>
+                <label class="choice-card choice-card-check">
+                  <input type="checkbox" name="services" value="Local marketing campaigns" />
+                  <div class="choice-copy">
+                    <strong>Local Marketing Campaigns</strong>
+                    <span>Promotions that reach nearby customers</span>
+                  </div>
+                </label>
+                <label class="choice-card choice-card-check">
+                  <input type="checkbox" name="services" value="Meta ads & targeting" />
+                  <div class="choice-copy">
+                    <strong>Meta Ads & Targeting</strong>
+                    <span>Paid campaigns aimed at the right people</span>
+                  </div>
+                </label>
+                <label class="choice-card choice-card-check">
+                  <input type="checkbox" name="services" value="Event promotion & community engagement" />
+                  <div class="choice-copy">
+                    <strong>Event Promotion</strong>
+                    <span>Launches, activations, and community reach</span>
+                  </div>
+                </label>
+              </div>
             </div>
 
-            <div class="grid service-detail-grid">
-              <label>
-                Services you need most
-                <select name="primaryService">
-                  <option value="">Choose one</option>
-                  <option value="Content creation">Content creation</option>
-                  <option value="Social media management">Social media management</option>
-                  <option value="Podcasts & owner interviews">Podcasts & owner interviews</option>
-                  <option value="Local marketing campaigns">Local marketing campaigns</option>
-                  <option value="Meta ads & targeting">Meta ads & targeting</option>
-                  <option value="Event promotion & community engagement">Event promotion & community engagement</option>
-                </select>
-              </label>
-              <label>
-                What should we focus on first?
-                <select name="projectFocus">
-                  <option value="">Choose one</option>
-                  <option value="Reels and short-form video">Reels and short-form video</option>
-                  <option value="Photography">Photography</option>
-                  <option value="Event coverage">Event coverage</option>
-                  <option value="Podcast setup">Podcast setup</option>
-                  <option value="Ad campaign">Ad campaign</option>
-                  <option value="Full service support">Full service support</option>
-                </select>
-              </label>
-            </div>
-            <div class="service-checkboxes">
-              <label><input type="checkbox" name="services" value="Content creation" /> Content creation</label>
-              <label><input type="checkbox" name="services" value="Social media management" /> Social media management</label>
-              <label><input type="checkbox" name="services" value="Podcasts & owner interviews" /> Podcasts & owner interviews</label>
-              <label><input type="checkbox" name="services" value="Local marketing campaigns" /> Local marketing campaigns</label>
-              <label><input type="checkbox" name="services" value="Meta ads & targeting" /> Meta ads & targeting</label>
-              <label><input type="checkbox" name="services" value="Event promotion & community engagement" /> Event promotion & community engagement</label>
+            <div class="choice-block">
+              <div class="choice-heading">What best describes your business?</div>
+              <div class="choice-grid choice-grid-radio">
+                <label class="choice-card choice-card-radio">
+                  <input type="radio" name="businessType" value="Restaurant" required />
+                  <div class="choice-copy">
+                    <strong>Restaurant</strong>
+                    <span>Dining, catering, or food service</span>
+                  </div>
+                </label>
+                <label class="choice-card choice-card-radio">
+                  <input type="radio" name="businessType" value="Cafe" />
+                  <div class="choice-copy">
+                    <strong>Cafe</strong>
+                    <span>Coffee, desserts, and casual service</span>
+                  </div>
+                </label>
+                <label class="choice-card choice-card-radio">
+                  <input type="radio" name="businessType" value="Retail" />
+                  <div class="choice-copy">
+                    <strong>Retail</strong>
+                    <span>Shop, store, or product-based business</span>
+                  </div>
+                </label>
+                <label class="choice-card choice-card-radio">
+                  <input type="radio" name="businessType" value="Service business" />
+                  <div class="choice-copy">
+                    <strong>Service Business</strong>
+                    <span>Professional or local service brand</span>
+                  </div>
+                </label>
+              </div>
             </div>
 
             <div class="actions">
@@ -241,14 +242,32 @@
           </div>
 
           <div class="step" data-step="3">
-            <h2>Where should we focus?</h2>
-            <div class="checkbox-group">
-              <label><input type="checkbox" name="platforms" value="Instagram" /> Instagram</label>
-              <label><input type="checkbox" name="platforms" value="Facebook" /> Facebook</label>
-              <label><input type="checkbox" name="platforms" value="TikTok" /> TikTok</label>
-              <label><input type="checkbox" name="platforms" value="YouTube" /> YouTube</label>
-              <label><input type="checkbox" name="platforms" value="Google Business" /> Google Business</label>
-              <label><input type="checkbox" name="platforms" value="Community events" /> Community events</label>
+            <h2>How should we reach you?</h2>
+            <div class="choice-block">
+              <div class="choice-heading">Preferred contact method</div>
+              <div class="choice-grid choice-grid-radio">
+                <label class="choice-card choice-card-radio">
+                  <input type="radio" name="contactMethod" value="Phone" required />
+                  <div class="choice-copy">
+                    <strong>Phone</strong>
+                    <span>Best for quick back-and-forth</span>
+                  </div>
+                </label>
+                <label class="choice-card choice-card-radio">
+                  <input type="radio" name="contactMethod" value="Email" />
+                  <div class="choice-copy">
+                    <strong>Email</strong>
+                    <span>Good for details and follow-up</span>
+                  </div>
+                </label>
+                <label class="choice-card choice-card-radio">
+                  <input type="radio" name="contactMethod" value="WhatsApp" />
+                  <div class="choice-copy">
+                    <strong>WhatsApp</strong>
+                    <span>Fast and convenient for many clients</span>
+                  </div>
+                </label>
+              </div>
             </div>
 
             <label>

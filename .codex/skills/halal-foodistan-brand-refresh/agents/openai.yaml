@@ -1,0 +1,4 @@
+interface:
+  display_name: "Halal Foodistan Brand Refresh"
+  short_description: "Black-and-yellow site refresh workflow"
+  default_prompt: "Use $halal-foodistan-brand-refresh to update the Halal Foodistan site theme, copy, buttons, and lead flow."

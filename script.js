@@ -6,6 +6,35 @@ const progressBar = document.getElementById('progressBar');
 const resumeNotice = document.getElementById('resumeNotice');
 let currentStep = 0;
 
+function isValidPhone(phone) {
+  const digits = String(phone || '').replace(/\D/g, '');
+  return digits.length >= 10 && digits.length <= 15;
+}
+
+function isValidEmail(email) {
+  const value = String(email || '').trim();
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && !value.includes('..');
+}
+
+function clearFieldState(field) {
+  const wrapper = field.closest('label') || field.parentElement;
+  wrapper.classList.remove('error');
+  field.setCustomValidity('');
+}
+
+function setFieldError(field, message) {
+  const wrapper = field.closest('label') || field.parentElement;
+  wrapper.classList.add('error');
+  field.setCustomValidity(message);
+}
+
+function setGroupError(step, name, hasError) {
+  const group = step.querySelector(`input[name="${name}"]`)?.closest('.choice-grid');
+  if (group) {
+    group.classList.toggle('error', hasError);
+  }
+}
+
 function updateProgress() {
   const progress = ((currentStep + 1) / steps.length) * 100;
   progressBar.style.width = `${progress}%`;
@@ -21,21 +50,69 @@ function showStep(index) {
 
 function validateCurrentStep() {
   const current = steps[currentStep];
-  const fields = current.querySelectorAll('input[required], select[required], textarea[required]');
   let isValid = true;
 
-  fields.forEach((field) => {
-    const wrapper = field.closest('label') || field.parentElement;
-    wrapper.classList.remove('error');
+  current.querySelectorAll('input, select, textarea').forEach(clearFieldState);
+  current.querySelectorAll('.choice-grid').forEach((group) => group.classList.remove('error'));
 
-    const isEmpty = field.type === 'checkbox' ? !field.checked : !field.value.trim();
-    if (isEmpty) {
-      wrapper.classList.add('error');
+  if (currentStep === 0) {
+    const requiredFields = current.querySelectorAll('input[required], textarea[required]');
+    requiredFields.forEach((field) => {
+      const value = field.value.trim();
+      if (!value) {
+        setFieldError(field, 'This field is required.');
+        isValid = false;
+        return;
+      }
+
+      if (field.name === 'phone' && !isValidPhone(value)) {
+        setFieldError(field, 'Please enter a valid phone number with at least 10 digits.');
+        isValid = false;
+      }
+
+      if (field.name === 'email' && !isValidEmail(value)) {
+        setFieldError(field, 'Please enter a valid email address.');
+        isValid = false;
+      }
+    });
+  }
+
+  if (currentStep === 1) {
+    const serviceSelected = current.querySelector('input[name="services"]:checked');
+    const businessTypeSelected = current.querySelector('input[name="businessType"]:checked');
+
+    if (!serviceSelected) {
+      setGroupError(current, 'services', true);
       isValid = false;
     }
-  });
+
+    if (!businessTypeSelected) {
+      setGroupError(current, 'businessType', true);
+      isValid = false;
+    }
+  }
+
+  if (currentStep === 2) {
+    const contactMethodSelected = current.querySelector('input[name="contactMethod"]:checked');
+    if (!contactMethodSelected) {
+      setGroupError(current, 'contactMethod', true);
+      isValid = false;
+    }
+  }
+
+  if (currentStep === 3) {
+    const consent = current.querySelector('input[name="consent"]');
+    if (consent && !consent.checked) {
+      setFieldError(consent, 'Please agree before submitting.');
+      isValid = false;
+    }
+  }
 
   if (!isValid) {
+    const firstInvalid = current.querySelector('.error input, .choice-grid.error input, input:invalid');
+    if (firstInvalid && typeof firstInvalid.focus === 'function') {
+      firstInvalid.focus();
+    }
     return false;
   }
 
@@ -45,7 +122,6 @@ function validateCurrentStep() {
 function collectFormData() {
   const data = Object.fromEntries(new FormData(form).entries());
   data.services = Array.from(form.querySelectorAll('input[name="services"]:checked')).map((box) => box.value);
-  data.platforms = Array.from(form.querySelectorAll('input[name="platforms"]:checked')).map((box) => box.value);
   data.submittedAt = new Date().toISOString();
   data.leadScore = calculateLeadScore(data);
   data.recommendation = getRecommendation(data);
@@ -54,18 +130,15 @@ function collectFormData() {
 
 function calculateLeadScore(data) {
   const services = Array.isArray(data.services) ? data.services : [];
-  const platforms = Array.isArray(data.platforms) ? data.platforms : [];
   let score = 28;
 
   if (data.businessName) score += 12;
-  if (data.phone && data.email) score += 15;
+  if (data.contactName) score += 8;
+  if (isValidPhone(data.phone)) score += 15;
+  if (isValidEmail(data.email)) score += 15;
   if (data.businessType) score += 10;
-  if (data.goal) score += 10;
-  if (data.budget && data.budget !== 'Under $500') score += 10;
   if (services.length) score += Math.min(services.length * 6, 18);
-  if (platforms.length) score += 8;
   if (data.notes) score += 5;
-  if (data.projectFocus) score += 4;
   if (data.contactTime) score += 3;
 
   return Math.min(score, 100);
@@ -75,12 +148,8 @@ function getRecommendation(data) {
   const services = Array.isArray(data.services) ? data.services : [];
   const serviceCount = services.length;
 
-  if (data.budget === '$3000+' || data.budget === '$1500-$3000' || serviceCount >= 4) {
+  if (serviceCount >= 4) {
     return 'Full-service recommendation: content, campaigns, and ongoing social support for steady growth.';
-  }
-
-  if (data.budget === 'Under $500') {
-    return 'Starter recommendation: a focused content and social plan with quick wins first.';
   }
 
   if (serviceCount >= 2) {
@@ -102,23 +171,23 @@ function restoreProgress() {
   try {
     const data = JSON.parse(stored);
     Object.entries(data).forEach(([key, value]) => {
-      if (key === 'platforms' || key === 'services') return;
-      const field = form.querySelector(`[name="${key}"]`);
-      if (field) {
-        if (field.type === 'checkbox') {
-          field.checked = Boolean(value);
-        } else {
-          field.value = value;
-        }
+      if (key === 'services') return;
+      const fields = form.querySelectorAll(`[name="${key}"]`);
+      if (!fields.length) return;
+
+      const first = fields[0];
+      if (first.type === 'radio') {
+        fields.forEach((radio) => {
+          radio.checked = radio.value === value;
+        });
+      } else if (first.type === 'checkbox') {
+        fields.forEach((checkbox) => {
+          checkbox.checked = Boolean(value);
+        });
+      } else {
+        first.value = value;
       }
     });
-
-    if (Array.isArray(data.platforms)) {
-      data.platforms.forEach((platform) => {
-        const checkbox = form.querySelector(`input[name="platforms"][value="${platform}"]`);
-        if (checkbox) checkbox.checked = true;
-      });
-    }
 
     if (Array.isArray(data.services)) {
       data.services.forEach((service) => {
@@ -147,13 +216,46 @@ function showThankYou(data) {
   form.classList.add('hidden');
   thankYou.classList.remove('hidden');
   thankYou.innerHTML = `
-    <h3>Thank you, ${data.ownerName || data.businessName || 'friend'}.</h3>
+    <h3>Thank you, ${data.contactName || data.businessName || 'friend'}.</h3>
     <p>Your inquiry has been captured and we will review it shortly.</p>
     <p><strong>Services:</strong> ${services.length ? services.join(', ') : 'Not specified'}</p>
     <p><strong>Lead score:</strong> ${data.leadScore}/100</p>
     <p><strong>Recommendation:</strong> ${data.recommendation}</p>
     <p>We will contact you at ${data.phone || data.email || 'your preferred contact point'} soon.</p>
   `;
+}
+
+function validateAllContactFields() {
+  const phone = form.querySelector('[name="phone"]');
+  const email = form.querySelector('[name="email"]');
+
+  if (phone) {
+    const value = phone.value.trim();
+    clearFieldState(phone);
+    if (!value) {
+      setFieldError(phone, 'Phone number is required.');
+      return false;
+    }
+    if (!isValidPhone(value)) {
+      setFieldError(phone, 'Please enter a valid phone number with at least 10 digits.');
+      return false;
+    }
+  }
+
+  if (email) {
+    const value = email.value.trim();
+    clearFieldState(email);
+    if (!value) {
+      setFieldError(email, 'Email is required.');
+      return false;
+    }
+    if (!isValidEmail(value)) {
+      setFieldError(email, 'Please enter a valid email address.');
+      return false;
+    }
+  }
+
+  return true;
 }
 
 steps.forEach((step, index) => {
@@ -163,6 +265,12 @@ steps.forEach((step, index) => {
       saveProgress();
       toggleConditionalFields();
     });
+  });
+});
+
+form.querySelectorAll('[name="phone"], [name="email"]').forEach((field) => {
+  field.addEventListener('blur', () => {
+    validateAllContactFields();
   });
 });
 
@@ -182,6 +290,7 @@ document.querySelectorAll('.prev').forEach((button) => {
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
+  if (!validateAllContactFields()) return;
   if (!validateCurrentStep()) return;
 
   const payload = collectFormData();

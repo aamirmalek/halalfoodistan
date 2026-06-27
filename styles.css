@@ -1,17 +1,33 @@
 :root {
   color-scheme: dark;
-  --bg: #07110c;
-  --panel: #0f1f17;
-  --panel-strong: rgba(11, 23, 16, 0.96);
-  --panel-soft: rgba(21, 40, 32, 0.72);
-  --panel-alt: #152820;
-  --text: #f5f1e8;
-  --muted: #b7c3b8;
-  --accent: #d0a647;
-  --accent-strong: #f0c96c;
+  --bg: #050505;
+  --panel: #111111;
+  --panel-strong: rgba(10, 10, 10, 0.96);
+  --panel-soft: rgba(22, 22, 22, 0.76);
+  --panel-alt: #181818;
+  --text: #f6f1e4;
+  --muted: #c7c1b1;
+  --accent: #f4c542;
+  --accent-strong: #ffe36b;
   --success: #4caf50;
   --danger: #ff6b6b;
-  --border: rgba(255, 255, 255, 0.12);
+  --border: rgba(255, 227, 107, 0.14);
+  --border2: rgba(255, 227, 107, 0.22);
+  --gold: #f4c542;
+  --gold-light: #ffe36b;
+  --gold-glow: #ffe9a6;
+  --teal: #f4c542;
+  --teal-dark: #b88709;
+  --teal-light: #ffe36b;
+  --navy: #050505;
+  --navy2: #0f0f0f;
+  --navy3: #1b1b1b;
+  --bg2: #0a0a0a;
+  --bg3: #121212;
+  --text2: #d4cfbf;
+  --text3: #8e8878;
+  --card-bg: rgba(18, 18, 18, 0.86);
+  --glass: rgba(255, 255, 255, 0.03);
 }
 
 * {
@@ -22,9 +38,9 @@ body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   background:
-    radial-gradient(circle at top, rgba(208, 166, 71, 0.18), transparent 30%),
-    radial-gradient(circle at 85% 12%, rgba(240, 201, 108, 0.12), transparent 26%),
-    linear-gradient(180deg, #07110c 0%, #09160f 48%, #06100b 100%);
+    radial-gradient(circle at top, rgba(244, 197, 66, 0.14), transparent 28%),
+    radial-gradient(circle at 85% 12%, rgba(255, 227, 107, 0.08), transparent 26%),
+    linear-gradient(180deg, #050505 0%, #090909 48%, #040404 100%);
   color: var(--text);
   min-height: 100vh;
   position: relative;
@@ -36,8 +52,8 @@ body::before {
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(255, 227, 107, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 227, 107, 0.045) 1px, transparent 1px);
   background-size: 44px 44px;
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 85%);
   pointer-events: none;
@@ -78,7 +94,7 @@ body::before {
   width: 280px;
   height: 280px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(208, 166, 71, 0.2), transparent 68%);
+  background: radial-gradient(circle, rgba(244, 197, 66, 0.18), transparent 68%);
   pointer-events: none;
 }
 
@@ -120,7 +136,7 @@ body::before {
 
 .hero-badge span {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(208, 166, 71, 0.22);
+  border: 1px solid rgba(255, 227, 107, 0.22);
   padding: 10px 14px;
   border-radius: 999px;
   color: var(--accent-strong);
@@ -176,7 +192,7 @@ body::before {
 
 .service-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(208, 166, 71, 0.35);
+  border-color: rgba(255, 227, 107, 0.35);
   background: rgba(21, 40, 32, 0.88);
 }
 
@@ -187,8 +203,8 @@ body::before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(208, 166, 71, 0.12);
-  border: 1px solid rgba(208, 166, 71, 0.22);
+  background: rgba(244, 197, 66, 0.12);
+  border: 1px solid rgba(255, 227, 107, 0.24);
   font-size: 1.25rem;
   margin-bottom: 14px;
 }
@@ -222,7 +238,7 @@ body::before {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle at top, rgba(240, 201, 108, 0.16), rgba(0, 0, 0, 0));
+  background: radial-gradient(circle at top, rgba(255, 227, 107, 0.14), rgba(0, 0, 0, 0));
   border-radius: 18px;
   padding: 18px;
   margin-bottom: 16px;
@@ -287,34 +303,83 @@ body::before {
   font-size: 0.96rem;
 }
 
-.service-detail-grid {
-  margin-top: 14px;
+.choice-block {
+  margin-top: 18px;
 }
 
-.service-checkboxes {
+.choice-heading {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent-strong);
+  margin-bottom: 12px;
+}
+
+.choice-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  margin-top: 16px;
 }
 
-.service-checkboxes label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  color: var(--text);
-  font-weight: 500;
-  background: rgba(255, 255, 255, 0.04);
+.choice-grid-services {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.choice-grid-radio {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.choice-card {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.choice-card input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  pointer-events: none;
+}
+
+.choice-copy {
+  display: block;
+  min-height: 100%;
+  padding: 16px 16px 15px;
+  border-radius: 16px;
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
-.service-checkboxes input {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--accent);
+.choice-copy strong {
+  display: block;
+  color: var(--text);
+  font-size: 0.98rem;
+  margin-bottom: 4px;
+}
+
+.choice-copy span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.choice-card:hover .choice-copy {
+  transform: translateY(-2px);
+  border-color: rgba(255, 227, 107, 0.34);
+}
+
+.choice-card input:checked + .choice-copy {
+  background: linear-gradient(135deg, rgba(244, 197, 66, 0.18), rgba(255, 227, 107, 0.08));
+  border-color: rgba(255, 227, 107, 0.5);
+  box-shadow: 0 0 0 1px rgba(255, 227, 107, 0.14) inset;
+}
+
+.choice-grid.error .choice-copy {
+  border-color: rgba(255, 107, 107, 0.85);
+  box-shadow: 0 0 0 1px rgba(255, 107, 107, 0.18) inset;
 }
 
 .progress-track {
@@ -375,7 +440,7 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  outline: 2px solid rgba(240, 201, 108, 0.3);
+  outline: 2px solid rgba(255, 227, 107, 0.28);
   border-color: var(--accent);
 }
 
@@ -404,6 +469,24 @@ textarea {
 .checkbox-group input,
 .consent input {
   width: auto;
+}
+
+.consent {
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.consent.error {
+  border-color: rgba(255, 107, 107, 0.85);
+  box-shadow: 0 0 0 1px rgba(255, 107, 107, 0.16) inset;
+}
+
+.error {
+  border-color: rgba(255, 107, 107, 0.75) !important;
 }
 
 .actions {
@@ -438,12 +521,12 @@ textarea {
 }
 
 .resume-notice {
-  background: rgba(76, 175, 80, 0.13);
-  border: 1px solid rgba(76, 175, 80, 0.25);
+  background: rgba(244, 197, 66, 0.12);
+  border: 1px solid rgba(255, 227, 107, 0.24);
   border-radius: 12px;
   padding: 12px 14px;
   margin-bottom: 16px;
-  color: #dff7e1;
+  color: #f7efc8;
 }
 
 .resume-notice button {
@@ -453,7 +536,7 @@ textarea {
   padding: 7px 10px;
   font: inherit;
   cursor: pointer;
-  background: var(--accent);
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
   color: #1c1300;
 }
 
@@ -464,8 +547,8 @@ textarea {
 .thank-you {
   padding: 24px;
   border-radius: 18px;
-  background: linear-gradient(135deg, rgba(208, 166, 71, 0.2), rgba(76, 175, 80, 0.18));
-  border: 1px solid rgba(208, 166, 71, 0.25);
+  background: linear-gradient(135deg, rgba(244, 197, 66, 0.22), rgba(255, 227, 107, 0.12));
+  border: 1px solid rgba(255, 227, 107, 0.22);
 }
 
 .thank-you h3 {
