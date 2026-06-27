@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Halal Foodistan | Lead Capture</title>
+    <meta
+      name="description"
+      content="Modern lead capture questionnaire for Halal Foodistan restaurant growth services."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="hero-card">
+        <div class="hero-copy">
+          <p class="eyebrow">Halal Foodistan</p>
+          <h1>Capture high-intent restaurant leads with a premium experience.</h1>
+          <p class="subtext">
+            A polished questionnaire that collects the right details, scores every lead,
+            recommends the best package, and submits everything to your Google Workspace workflow.
+          </p>
+        </div>
+        <div class="hero-badge">
+          <span>✓ Google Sheets ready</span>
+          <span>✓ Email alerts</span>
+          <span>✓ Smart recommendations</span>
+        </div>
+      </section>
+
+      <section class="form-card">
+        <div id="resumeNotice" class="resume-notice hidden"></div>
+
+        <div class="progress-track" aria-label="Form progress">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+
+        <form id="leadForm" novalidate>
+          <div class="step active" data-step="1">
+            <h2>Tell us about your business</h2>
+            <div class="grid">
+              <label>
+                Business name
+                <input type="text" name="businessName" required />
+              </label>
+              <label>
+                Owner name
+                <input type="text" name="ownerName" required />
+              </label>
+              <label>
+                Phone
+                <input type="tel" name="phone" required />
+              </label>
+              <label>
+                Email
+                <input type="email" name="email" required />
+              </label>
+              <label>
+                Instagram
+                <input type="text" name="instagram" />
+              </label>
+              <label>
+                Website
+                <input type="url" name="website" />
+              </label>
+            </div>
+            <div class="actions">
+              <button type="button" class="btn btn-primary next">Next</button>
+            </div>
+          </div>
+
+          <div class="step" data-step="2">
+            <h2>What are you looking for?</h2>
+            <div class="grid">
+              <label>
+                Business type
+                <select name="businessType" required>
+                  <option value="">Choose one</option>
+                  <option value="Restaurant">Restaurant</option>
+                  <option value="Catering">Catering</option>
+                  <option value="Event">Event</option>
+                  <option value="Cloud kitchen">Cloud kitchen</option>
+                </select>
+              </label>
+              <label>
+                Primary goal
+                <select name="goal" required>
+                  <option value="">Choose one</option>
+                  <option value="Bring more customers">Bring more customers</option>
+                  <option value="Improve online presence">Improve online presence</option>
+                  <option value="Launch a new concept">Launch a new concept</option>
+                  <option value="Increase catering orders">Increase catering orders</option>
+                </select>
+              </label>
+              <label>
+                Budget range
+                <select name="budget" required>
+                  <option value="">Choose one</option>
+                  <option value="Under $500">Under $500</option>
+                  <option value="$500-$1500">$500-$1500</option>
+                  <option value="$1500-$3000">$1500-$3000</option>
+                  <option value="$3000+">$3000+</option>
+                </select>
+              </label>
+              <label>
+                Preferred contact method
+                <select name="contactMethod" required>
+                  <option value="">Choose one</option>
+                  <option value="Phone">Phone</option>
+                  <option value="Email">Email</option>
+                  <option value="WhatsApp">WhatsApp</option>
+                </select>
+              </label>
+            </div>
+
+            <div id="restaurantFields" class="conditional hidden">
+              <label>
+                Delivery platforms
+                <select name="deliveryPlatforms">
+                  <option value="">Choose one</option>
+                  <option value="DoorDash">DoorDash</option>
+                  <option value="Uber Eats">Uber Eats</option>
+                  <option value="Grubhub">Grubhub</option>
+                  <option value="All three">All three</option>
+                </select>
+              </label>
+            </div>
+
+            <div id="eventFields" class="conditional hidden">
+              <label>
+                Event capacity
+                <input type="text" name="eventCapacity" />
+              </label>
+              <label>
+                Venue style
+                <select name="venueStyle">
+                  <option value="">Choose one</option>
+                  <option value="Indoor">Indoor</option>
+                  <option value="Outdoor">Outdoor</option>
+                  <option value="Hybrid">Hybrid</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="actions">
+              <button type="button" class="btn btn-secondary prev">Back</button>
+              <button type="button" class="btn btn-primary next">Next</button>
+            </div>
+          </div>
+
+          <div class="step" data-step="3">
+            <h2>Choose your growth channels</h2>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="platforms" value="Instagram" /> Instagram</label>
+              <label><input type="checkbox" name="platforms" value="Facebook" /> Facebook</label>
+              <label><input type="checkbox" name="platforms" value="Google Maps" /> Google Maps</label>
+              <label><input type="checkbox" name="platforms" value="TikTok" /> TikTok</label>
+            </div>
+
+            <label>
+              Best time to contact
+              <input type="text" name="contactTime" />
+            </label>
+            <label>
+              Share anything important
+              <textarea name="notes" rows="4" placeholder="Tell us about your launch, promotions, or goals."></textarea>
+            </label>
+
+            <div class="actions">
+              <button type="button" class="btn btn-secondary prev">Back</button>
+              <button type="button" class="btn btn-primary next">Next</button>
+            </div>
+          </div>
+
+          <div class="step" data-step="4">
+            <h2>Almost done</h2>
+            <label>
+              Additional details
+              <textarea name="additionalNotes" rows="4" placeholder="Any extra context for the team?"></textarea>
+            </label>
+            <label class="consent">
+              <input type="checkbox" name="consent" required />
+              I agree to be contacted about my inquiry.
+            </label>
+
+            <div class="actions">
+              <button type="button" class="btn btn-secondary prev">Back</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </form>
+
+        <section id="thankYou" class="thank-you hidden" aria-live="polite"></section>
+      </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

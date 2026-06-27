@@ -1,0 +1,262 @@
+:root {
+  color-scheme: dark;
+  --bg: #07110c;
+  --panel: #0f1f17;
+  --panel-alt: #152820;
+  --text: #f5f1e8;
+  --muted: #b7c3b8;
+  --accent: #d0a647;
+  --accent-strong: #f0c96c;
+  --success: #4caf50;
+  --danger: #ff6b6b;
+  --border: rgba(255, 255, 255, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top, rgba(208, 166, 71, 0.18), transparent 30%), var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.page-shell {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+}
+
+.hero-card,
+.form-card {
+  background: rgba(15, 31, 23, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 16px 60px rgba(0, 0, 0, 0.28);
+}
+
+.hero-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+.hero-card h1 {
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  margin: 0 0 12px;
+  line-height: 1.1;
+}
+
+.hero-card .subtext {
+  max-width: 540px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.hero-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 220px;
+  align-self: center;
+}
+
+.hero-badge span {
+  background: var(--panel-alt);
+  border: 1px solid rgba(208, 166, 71, 0.25);
+  padding: 10px 12px;
+  border-radius: 999px;
+  text-align: center;
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+.form-card {
+  padding: 28px;
+}
+
+.progress-track {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 25%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  transition: width 0.25s ease;
+}
+
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+}
+
+.step h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  padding: 12px 14px;
+  font: inherit;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid rgba(240, 201, 108, 0.3);
+  border-color: var(--accent);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.checkbox-group label,
+.consent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.checkbox-group input,
+.consent input {
+  width: auto;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  color: #1c1300;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+.resume-notice {
+  background: rgba(76, 175, 80, 0.13);
+  border: 1px solid rgba(76, 175, 80, 0.25);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  color: #dff7e1;
+}
+
+.resume-notice button {
+  margin-left: 10px;
+  border: 0;
+  border-radius: 999px;
+  padding: 7px 10px;
+  font: inherit;
+  cursor: pointer;
+  background: var(--accent);
+  color: #1c1300;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.thank-you {
+  padding: 24px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(208, 166, 71, 0.2), rgba(76, 175, 80, 0.18));
+  border: 1px solid rgba(208, 166, 71, 0.25);
+}
+
+.thank-you h3 {
+  margin-top: 0;
+}
+
+.thank-you p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.error input,
+.error select,
+.error textarea {
+  border-color: var(--danger);
+}
+
+@media (max-width: 820px) {
+  .hero-card {
+    flex-direction: column;
+  }
+
+  .grid,
+  .checkbox-group {
+    grid-template-columns: 1fr;
+  }
+}
